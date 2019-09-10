@@ -22,6 +22,10 @@ stories.add('simple autocomplete', () => {
             border: "1px solid #ccc",
             cursor: "pointer"
         };
+        const suggestionStyle = {
+            fontSize: "14px",
+            padding: "2px 0"
+        }
 
         const onChange = (value) => {
             console.log('onChange ', value)
@@ -30,6 +34,7 @@ stories.add('simple autocomplete', () => {
         return (<Autocomplete suggestions={['1', '2', '3', '33', '22', '234', '233']}
                               debounceTime={500}
                               onChange={onChange}
+                              suggestionStyle={suggestionStyle}
                               containerStyle={containerStyle}
                               autocompleteStyle={autocompleteStyle}
                               selectedSuggestionStyle={selectedSuggestionStyle}/>

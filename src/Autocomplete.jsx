@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import debounce from 'lodash.debounce';
 
 export default class Autocomplete extends React.Component {
@@ -8,7 +10,7 @@ export default class Autocomplete extends React.Component {
         this.state = {
             filteredSuggestions: null,
             selectedSuggestion: null,
-            value: props.value
+            inputValue: props.inputValue
         };
 
         this.onInputChange = this.onInputChange.bind(this);
@@ -32,7 +34,7 @@ export default class Autocomplete extends React.Component {
 
         this.setState({
             filteredSuggestions,
-            value: inputValue
+            inputValue
         });
 
         this.callPropsChangeMehod(inputValue);
@@ -46,7 +48,7 @@ export default class Autocomplete extends React.Component {
         //arrow down key
         if(keyCode === 40 && selectedSuggestion < filteredSuggestions.length - 1) {
             this.setState((state) => ({
-                value: state.filteredSuggestions[state.selectedSuggestion + 1],
+                inputValue: state.filteredSuggestions[state.selectedSuggestion + 1],
                 selectedSuggestion: state.selectedSuggestion + 1,
             }))
         }
@@ -54,7 +56,7 @@ export default class Autocomplete extends React.Component {
         //arrow up key 
         if(keyCode === 38 && selectedSuggestion !== 0 ) {
             this.setState((state) => ({
-                value: state.filteredSuggestions[state.selectedSuggestion - 1],
+                inputValue: state.filteredSuggestions[state.selectedSuggestion - 1],
                 selectedSuggestion: state.selectedSuggestion - 1,
             }))
         }
@@ -73,8 +75,8 @@ export default class Autocomplete extends React.Component {
 
     onSuggestionClicked(e) {
         this.setState({
-            filteredSuggestions: [],
-            value: e.target.innerText
+            filteredSuggestions: null,
+            inputValue: e.target.innerText
         });
         this.callPropsChangeMehod(e.target.innerText);
     }
@@ -87,14 +89,16 @@ export default class Autocomplete extends React.Component {
 
     render() {
         const { containerStyle, inputStyle, autocompleteStyle } = this.props;
+        const { inputValue, filteredSuggestions } = this.state;
+
         return (
             <div style={containerStyle}>
-                <input type="text" value={this.state.value}
+                <input type="text" value={inputValue}
                     onChange={this.onInputChange}
                     onKeyDown={this.onKeyDown}
                     style={inputStyle}
                 />
-                {this.state.filteredSuggestions &&
+                {filteredSuggestions &&
                     <div style={autocompleteStyle}>
                         {this.renderAutocomplete()}
                     </div>
@@ -104,8 +108,8 @@ export default class Autocomplete extends React.Component {
     }
 
     renderAutocomplete() {
+        const { selectedSuggestionStyle, suggestionStyle } = this.props;
         const { filteredSuggestions, selectedSuggestion } = this.state;
-        const { selectedSuggestionStyle } = this.props;
 
         return (
             filteredSuggestions ?
@@ -117,7 +121,7 @@ export default class Autocomplete extends React.Component {
                             onClick={this.onSuggestionClicked}
                             onMouseEnter={() => this.setState({ selectedSuggestion: index })}
                             onMouseLeave={() => this.setState({ selectedSuggestion: null })}
-                            style={selectedStyle}
+                            style={{ ...selectedStyle, ...suggestionStyle }}
                         >
                             {suggestion}
                         </div>
@@ -128,3 +132,22 @@ export default class Autocomplete extends React.Component {
         );
     }
 }
+
+Autocomplete.defaultProps = {
+    debounceTime: 500
+};
+
+Autocomplete.propTypes = {
+    suggestions: PropTypes.array.isRequired,
+    inputValue: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
+    onChange: PropTypes.func.isRequired,
+    debounceTime: PropTypes.number,
+    containerStyle: PropTypes.object,
+    inputStyle: PropTypes.object,
+    autocompleteStyle: PropTypes.object,
+    suggestionStyle: PropTypes.object,
+    selectedSuggestionStyle: PropTypes.object
+};
