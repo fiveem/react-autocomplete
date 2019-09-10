@@ -36,7 +36,7 @@ import Autocomplete from '@fiveem/react-autocomplete'
 |name|type|sample value|description|
 |----|----|------------|-----------|
 |suggestions|Array|`['Romania', 'Spain', 'Italy', 'Georgia']`|Suggestions that will be displayed inside the autocomplete|
-|inputValue|Number/String|20/Spain|The value that will be displayed inside the input)|
+|inputValue|Number/String|`20/'Spain'`|The value that will be displayed inside the input)|
 |debounceTime|Number|`1000`|When the user ends typing in the input, the onChange method will be called after debounceTime seconds (debounceTime should be specified in miliseconds). Default value is 500 ms.`|
 |onChange|Function||Function that is called when the input value changes|
 |containerStyle|Object||Style that will be applied on the container|
