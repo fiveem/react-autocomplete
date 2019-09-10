@@ -11,7 +11,9 @@
     "react",
     "input",
     "autocomplete",
-    "input autocomplete"
+    "input autocomplete",
+    "debounce",
+    "autocomplete debounce"
   ],
   "author": "Roxana Muntian <roxanamuntian@gmail.com>",
   "repository": {
@@ -49,10 +51,12 @@
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-links": "^5.1.9",
     "@storybook/addons": "^5.1.9",
+    "@storybook/addon-knobs": "^5.1.11",
     "@storybook/react": "^5.1.9",
     "babel-loader": "^8.0.6",
     "css-loader": "^2.1.1",
     "node-sass": "^4.12.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
@@ -62,5 +66,7 @@
   "files": [
     "lib"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  }
 }
