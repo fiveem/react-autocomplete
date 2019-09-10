@@ -86,7 +86,7 @@ export default class Autocomplete extends React.Component {
     }
 
     render() {
-        const { containerStyle, inputStyle, autocompleteStyle, debounceTime } = this.props;
+        const { containerStyle, inputStyle, autocompleteStyle } = this.props;
         return (
             <div style={containerStyle}>
                 <input type="text" value={this.state.value}
@@ -94,9 +94,11 @@ export default class Autocomplete extends React.Component {
                     onKeyDown={this.onKeyDown}
                     style={inputStyle}
                 />
-                <div style={autocompleteStyle}>
-                    {this.renderAutocomplete()}
-                </div>
+                {this.state.filteredSuggestions &&
+                    <div style={autocompleteStyle}>
+                        {this.renderAutocomplete()}
+                    </div>
+                }
             </div>
         );
     }
